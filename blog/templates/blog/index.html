@@ -12,13 +12,15 @@
     <img src="{% static "blog/images/coding guy.jpg"%}" alt="Zaid - Author of this blog" />
     <h2>Zaid's Blog</h2>
   </header>
-  <p>Hi, I am Zaid and i love to blog about tech and the world!</p>
+  <p>Hi, I am Zaid and i love to blog about tech and food!</p>
 </section>
 <section id="latest-posts">
     <h2>Most Recent posts...</h2>
 
     <ul>
+      {% for post in posts %}
       {% include "blog/includes/post.html"%}
+      {% endfor %}
     </ul>
 </section>
 <section id="about">
