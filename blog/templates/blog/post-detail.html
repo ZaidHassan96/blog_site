@@ -5,17 +5,41 @@
 {% endblock %}
 
 {% block css_file %}
+<link rel="stylesheet" href="{% static "blog/post-comment.css" %}">
 <link rel="stylesheet" href="{% static "blog/post-detail.css"%}">
 {% endblock  %}
 
 
 {% block content %}
+
+{% if comment_form.errors%}
+<div id="alert">
+    <h2>Comment failed to post!</h2>
+    <p>Check the comment form below and try again.</p>
+    <a href="#comment-form">return to comment field.</a>
+</div>
+{% endif %}
+
 <section id="summary">
 <h2>{{post.title}}</h2>
 <div>
     {% for tag in post_tags %}
     <span class="tag">{{tag.caption}}</span>
     {% endfor %}
+</div>
+<div id="read-later">
+    <form action="{% url "read-later" %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{post.id}}" name="post_id">
+    <button>
+        {% if saved_for_later %}
+        Remove from Bookmarked.
+
+        {% else %}
+        Bookmark 
+        {% endif %}
+    </button>
+    </form>
 </div>
 <article>
     <img src="{{post.image.url}}" alt="{{post.title}}">
@@ -26,7 +50,24 @@
 </article>
 </section>
 
+
+
 <main>
 {{post.content}}
+{% if comments %}
+<section id="comments">
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <h2>{{comment.user_name}}</h2>
+            <p>{{comment.text|linebreaks}}</p>
+            <p>{{comment.date}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+<h3 id="no-comments">No comments.</h3>
+{% include "blog/includes/post-comment.html"%}
 </main>
 {% endblock %}
