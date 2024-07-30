@@ -48,6 +48,15 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
 
 
+class Subscription(models.Model):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.email
+
+
+
 
     
     

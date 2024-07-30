@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Comment
+from .models import Comment, Subscription
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -12,4 +12,16 @@ class CommentForm(forms.ModelForm):
             "text": "Your Comment"
         }
 
+
+
+class SubscriptionForm(forms.ModelForm):
+    class Meta:
+        model = Subscription
+        fields = ['email', 'first_name', 'last_name']
+        labels = {
+            "email": "Email",
+            "first_name": "Forename",
+            "last_name": "Surname"
+
+        }
 

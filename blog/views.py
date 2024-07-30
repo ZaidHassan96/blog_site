@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Post
-from .forms import CommentForm
+from .forms import CommentForm, SubscriptionForm
 
 
 
@@ -27,6 +27,30 @@ class StartingPageView(ListView):
         queryset = super().get_queryset()
         data = queryset[:3]
         return data
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["subscription_form"] = SubscriptionForm()  
+        return context
+    
+    def post(self, request):
+        subscription_form = SubscriptionForm(request.POST)
+        if subscription_form.is_valid():
+            subscription_form.save()
+            return HttpResponseRedirect(reverse("starting-page"))
+        
+        context = {
+            "posts" : self.get_queryset(),
+            "subscription_form": subscription_form
+
+
+        }
+
+        return render(request, "blog/index.html", context)
+
+
+
 
 
 # def starting_page(request):
