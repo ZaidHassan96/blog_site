@@ -2,13 +2,13 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
 from datetime import date
-from django.views.generic import ListView
+from django.views.generic import ListView, FormView
 from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Post
+from .models import Post, Subscription
 from .forms import CommentForm, SubscriptionForm
 
 
@@ -29,25 +29,25 @@ class StartingPageView(ListView):
         return data
     
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["subscription_form"] = SubscriptionForm()  
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["subscription_form"] = SubscriptionForm()  
+    #     return context
     
-    def post(self, request):
-        subscription_form = SubscriptionForm(request.POST)
-        if subscription_form.is_valid():
-            subscription_form.save()
-            return HttpResponseRedirect(reverse("starting-page"))
+    # def post(self, request):
+    #     subscription_form = SubscriptionForm(request.POST)
+    #     if subscription_form.is_valid():
+    #         subscription_form.save()
+    #         return HttpResponseRedirect(reverse("starting-page"))
         
-        context = {
-            "posts" : self.get_queryset(),
-            "subscription_form": subscription_form
+    #     context = {
+    #         "posts" : self.get_queryset(),
+    #         "subscription_form": subscription_form
 
 
-        }
+    #     }
 
-        return render(request, "blog/index.html", context)
+    #     return render(request, "blog/index.html", context)
 
 
 
@@ -158,6 +158,32 @@ class ReadLaterView(View):
 
         return HttpResponseRedirect("/")
         
+        
+class SubscriptionPageView(FormView):
+
+    template_name = "blog/subscription-page.html"
+    form_class = SubscriptionForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["subscription_form"] = SubscriptionForm()  
+        return context
+    
+    def post(self, request):
+        subscription_form = SubscriptionForm(request.POST)
+        if subscription_form.is_valid():
+            subscription_form.save()
+            return HttpResponseRedirect(reverse("starting-page"))
+        
+        context = {
+            "posts" : self.get_queryset(),
+            "subscription_form": subscription_form
+
+
+        }
+
+        return render(request, "blog/index.html", context)
+
 
         
 

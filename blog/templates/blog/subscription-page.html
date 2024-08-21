@@ -1,0 +1,34 @@
+ {% extends "base.html" %}
+ {% load static %}
+
+ {% block title %}
+ Subscription Page
+ {% endblock %}
+ 
+
+ {%block css_file%} 
+ <link rel="stylesheet" href="{% static "blog/subscription-page.css" %}">
+ {% endblock %}
+
+ {% block content %}
+
+  <section id="subscribe">
+  <h1>Subscribe to Mail list</h1>
+  <form action="" method="POST" id="comment_form">
+  {% csrf_token %}
+  {% for form_field in comment_form %}
+  <div class="form-control {% if form_field.errors%}invalid{% endif %}">
+    {{form_field.label_tag}}
+    {{form_field}}
+    {{form_field.errors}}
+  </div>
+  {% endfor %}
+  {{subscription_form.as_p}}
+  <button type="submit">Subscribe</button>
+</form>
+
+
+</section>  
+
+
+ {% endblock %}
