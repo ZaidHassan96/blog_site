@@ -14,7 +14,7 @@
 
   <section id="subscribe">
   <h1>Subscribe to Mail list</h1>
-  <form action="" method="POST" id="comment_form">
+  <form action="" method="POST" id="comment-form">
   {% csrf_token %}
   {% for form_field in comment_form %}
   <div class="form-control {% if form_field.errors%}invalid{% endif %}">

@@ -176,13 +176,13 @@ class SubscriptionPageView(FormView):
             return HttpResponseRedirect(reverse("starting-page"))
         
         context = {
-            "posts" : self.get_queryset(),
+            # "posts" : self.get_queryset(),
             "subscription_form": subscription_form
 
 
         }
 
-        return render(request, "blog/index.html", context)
+        return render(request, "blog/subscription-page.html", context)
 
 
         
