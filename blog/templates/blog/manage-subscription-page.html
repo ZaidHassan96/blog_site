@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+{% load static%}
+
+{% block title %}
+Manage Subscription Page
+{% endblock %}
+
+
+{%block css_file%} 
+<link rel="stylesheet" href="{% static "blog/manage-subscription-page.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="manage">
+<h1 class="title">Manage Subscription</h1>
+<p>Do you wish to unsubscribe from the mailing list?</p>
+<p>Please enter your email and submit to unsubscribe.</p>
+<div id="remove_sub">
+    <form action="" method="POST">
+    {% csrf_token %}
+    <label for="">Email:</label>
+    {% if email_not_found %}
+        <p style="color: red;">The email you entered is not subscribed.</p>
+    {% endif %}
+    <input type="" value="{{subscription.email}}" name="subscription_email">
+
+    <button type="submit">
+        Remove Subscription
+    </button>
+    </form>
+</div>
+</div>
+
+
+{% endblock %}

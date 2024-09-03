@@ -31,12 +31,25 @@ class StartingPageView(ListView):
         queryset = super().get_queryset()
         data = queryset[:3]
         return data
+
     
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["subscription_form"] = SubscriptionForm()  
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Retrieve the stored subscribers from the session
+        stored_subscriber = self.request.session.get("stored_subscriber")
+        
+        # Determine if the user has subscribed
+        # Assuming `subscription_id` is obtained from somewhere; replace with actual ID if needed
+        
+        print(stored_subscriber)
+      
+        # Add subscription status to the context
+        context["user_subscribed"] = stored_subscriber
+
+        return context
+        
     
     # def post(self, request):
     #     subscription_form = SubscriptionForm(request.POST)
@@ -175,6 +188,18 @@ class SubscriptionPageView(FormView):
     def form_valid(self, form):
         subscription = form.save()
         subscriber_info = subscription.get_subscriber_info()
+        stored_subscriber = self.request.session.get("stored_subscriber", False)
+        if not stored_subscriber:
+             self.request.session["stored_subscriber"] = True
+        
+       
+        
+        # subscription_id = subscription.id
+
+        # if subscription_id not in stored_subscribers:
+        #     stored_subscribers.append(subscriber_info["id"])
+        #     self.request.session["stored_subscribers"] = stored_subscribers
+
         print(subscription)  # Save the form
         print(subscriber_info)
         self.send_subscription_email(subscriber_info)  # Send the email
@@ -199,6 +224,42 @@ class SubscriptionPageView(FormView):
         recipient_list = [subscriber_info["email"]]  # Send to the subscriber's email
 
         send_mail(subject, message, from_email, recipient_list)
+    
+class ManageSubscriptionPage(FormView):
+    template_name = "blog/manage-subscription-page.html"
+    form_class = SubscriptionForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['email_not_found'] = False  # Initialize as False
+        return context
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('subscription_email')
+        context = self.get_context_data()
+        print(email)
+          
+        if email:
+            try:
+                subscription = Subscription.objects.get(email=email)
+                print(subscription, "hello")
+                subscription.delete()
+                stored_subscriber = self.request.session.get("stored_subscriber", False)
+                if stored_subscriber:
+                    self.request.session["stored_subscriber"] = False
+
+            
+            except Subscription.DoesNotExist:
+                context['email_not_found'] = True
+                return render(request, "blog/manage-subscription-page.html", context)
+                
+                # Handle the case where the email is not found
+                
+        return HttpResponseRedirect(reverse("starting-page"))
+
+          
+
+
 
 
         
