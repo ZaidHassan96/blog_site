@@ -49,6 +49,8 @@ class StartingPageView(ListView):
       
         # Add subscription status to the context
         context["user_subscribed"] = stored_subscriber
+        context["page_style"] = "style-one"
+     
 
         return context
         

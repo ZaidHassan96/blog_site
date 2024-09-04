@@ -78,7 +78,7 @@ main {
 
 .tag {
   background-color: white;
-  color: #390281;
+  color: #000000;
   padding: 0.5rem 1rem;
   border-radius: 8px;
 }
@@ -119,7 +119,7 @@ main {
 #read-later button:hover,
 #read-later button:active {
   background-color: white;
-  color: #390281;
+  color: #000000;
 }
 
 #no-comments {
