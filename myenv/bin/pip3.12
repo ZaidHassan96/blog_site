@@ -1,4 +1,4 @@
-#!/Users/zicoo/site_project/my_site/myenv/bin/python3.12
+#!/Users/zicoo/blog_site/myenv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

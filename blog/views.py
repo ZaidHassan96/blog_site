@@ -7,14 +7,20 @@ from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.conf import settings
 
 from .models import Post, Subscription
 from .forms import CommentForm, SubscriptionForm
+from django.contrib import messages
+from django.core.mail import send_mail
+
 
 
 
 def get_date(post):
     return post['date']
+    
+
 
 
 class StartingPageView(ListView):
@@ -27,12 +33,27 @@ class StartingPageView(ListView):
         queryset = super().get_queryset()
         data = queryset[:3]
         return data
+
     
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["subscription_form"] = SubscriptionForm()  
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Retrieve the stored subscribers from the session
+        stored_subscriber = self.request.session.get("stored_subscriber")
+        
+        # Determine if the user has subscribed
+        # Assuming `subscription_id` is obtained from somewhere; replace with actual ID if needed
+        
+        print(stored_subscriber)
+      
+        # Add subscription status to the context
+        context["user_subscribed"] = stored_subscriber
+        context["page_style"] = "style-one"
+     
+
+        return context
+        
     
     # def post(self, request):
     #     subscription_form = SubscriptionForm(request.POST)
@@ -64,12 +85,34 @@ class PostsView(ListView):
     ordering = ["-date"]
     context_object_name = "all_posts"
 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Retrieve the stored subscribers from the session
+        stored_subscriber = self.request.session.get("stored_subscriber")
+        
+        # Determine if the user has subscribed
+        # Assuming `subscription_id` is obtained from somewhere; replace with actual ID if needed
+        
+        print(stored_subscriber)
+      
+        # Add subscription status to the context
+        context["user_subscribed"] = stored_subscriber
+
+        return context
+
    
 
 
 class PostDetailView(View):
     template_name = "blog/post-detail.html"
     model = Post
+
+
+
+
+    
 
     def is_stored_post(self, request, post_id):
         stored_posts =  request.session.get("stored_posts")
@@ -82,13 +125,16 @@ class PostDetailView(View):
 
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
+        stored_subscriber = self.request.session.get("stored_subscriber")
+
  
         context = {
             "post": post,
             "post_tags": post.tags.all(),
             "comment_form": CommentForm(),
             "comments": post.comments.all().order_by("-id"),
-            "saved_for_later": self.is_stored_post(request, post.id)
+            "saved_for_later": self.is_stored_post(request, post.id),
+            "user_subscribed": stored_subscriber
         }
 
         
@@ -118,10 +164,19 @@ class PostDetailView(View):
 
 class ReadLaterView(View):
 
+
+
     def get(self, request):
         stored_posts = request.session.get("stored_posts")
+        stored_subscriber = self.request.session.get("stored_subscriber")
 
-        context = {}
+
+        context = {
+            "user_subscribed": stored_subscriber,
+            "has_posts": bool(stored_posts)
+        }
+
+    
         
         
         if stored_posts is None or len(stored_posts) == 0:
@@ -134,6 +189,8 @@ class ReadLaterView(View):
             context["has_posts"] = True
         
         return render(request, "blog/stored-posts.html", context )
+    
+    
 
             
 
@@ -160,29 +217,90 @@ class ReadLaterView(View):
         
         
 class SubscriptionPageView(FormView):
-
     template_name = "blog/subscription-page.html"
     form_class = SubscriptionForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["subscription_form"] = SubscriptionForm()  
+        stored_subscriber = self.request.session.get("stored_subscriber")
+        context["user_subscribed"] = stored_subscriber
+        context["subscription_form"] = self.get_form()
         return context
     
-    def post(self, request):
-        subscription_form = SubscriptionForm(request.POST)
-        if subscription_form.is_valid():
-            subscription_form.save()
-            return HttpResponseRedirect(reverse("starting-page"))
+    def form_valid(self, form):
+        subscription = form.save()
+        subscriber_info = subscription.get_subscriber_info()
+        stored_subscriber = self.request.session.get("stored_subscriber", False)
+        if not stored_subscriber:
+             self.request.session["stored_subscriber"] = True
         
-        context = {
-            # "posts" : self.get_queryset(),
-            "subscription_form": subscription_form
+       
+       
+
+        print(subscription)  # Save the form
+        print(subscriber_info)
+        self.send_subscription_email(subscriber_info)  # Send the email
+        return HttpResponseRedirect(reverse("starting-page"))
+
+    def form_invalid(self, form):
+        context = self.get_context_data(subscription_form=form)
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def send_subscription_email(self, subscriber_info):
+        
+        subject = 'Thank you for subscribing!'
+        message = f'Dear {subscriber_info["first_name"]},\n\nThank you for subscribing to our newsletter!'
+        from_email = settings.DEFAULT_FROM_EMAIL 
+        recipient_list = [subscriber_info["email"]]  # Send to the subscriber's email
+
+        send_mail(subject, message, from_email, recipient_list)
+    
+class ManageSubscriptionPage(FormView):
+    template_name = "blog/manage-subscription-page.html"
+    form_class = SubscriptionForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stored_subscriber = self.request.session.get("stored_subscriber")
+
+        context['email_not_found'] = False
+        context["user_subscribed"] = stored_subscriber
+          # Initialize as False
+        return context
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('subscription_email')
+        context = self.get_context_data()
+        print(email)
+          
+        if email:
+            try:
+                subscription = Subscription.objects.get(email=email)
+                print(subscription, "hello")
+                subscription.delete()
+                stored_subscriber = self.request.session.get("stored_subscriber", False)
+                if stored_subscriber:
+                    self.request.session["stored_subscriber"] = False
+
+            
+            except Subscription.DoesNotExist:
+                context['email_not_found'] = True
+                return render(request, "blog/manage-subscription-page.html", context)
+                
+                # Handle the case where the email is not found
+                
+        return HttpResponseRedirect(reverse("starting-page"))
+
+          
 
 
-        }
-
-        return render(request, "blog/subscription-page.html", context)
 
 
         

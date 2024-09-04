@@ -20,7 +20,7 @@
 
     <ul>
       {% for post in posts %}
-      {% include "blog/includes/post.html"%}
+      {% include "blog/includes/post.html" with page_style='style-one'%}
       {% endfor %}
     </ul>
 </section>

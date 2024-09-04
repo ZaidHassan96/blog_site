@@ -54,6 +54,15 @@ class Subscription(models.Model):
     last_name = models.CharField(max_length=100)
     def __str__(self):
         return self.email
+    
+    def get_subscriber_info(self):
+    
+        return {
+            "id" : self.id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name
+        }
 
 
 

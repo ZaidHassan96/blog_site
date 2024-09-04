@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/Users/zicoo/site_project/my_site/myenv/bin/python3.12
+=======
+#!/Users/zicoo/blog_site/myenv/bin/python3.12
+>>>>>>> 09b40168ccb55304d098925487a5c0bd523a5eae
 # -*- coding: utf-8 -*-
 import re
 import sys
