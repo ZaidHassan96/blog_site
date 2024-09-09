@@ -15,13 +15,14 @@
     flex-direction: column;
     text-align: center;
     margin-top: 100px;
-    border: 2px solid grey;
+    border: 1px solid #ccc;
     width: 50%;
     border-radius: 10px;
     align-items: center;
     justify-content: center;
     margin-left: 25%;
     padding-bottom: 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
   
 .title { 
@@ -30,6 +31,10 @@
      
     
     
+  }
+
+  label {
+    font-weight: bold;
   }
 
   button {

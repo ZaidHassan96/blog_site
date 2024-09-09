@@ -14,11 +14,11 @@
         <nav>
           <a href="{% url "posts-page"  %}">All Posts</a>
           <a href="{% url "read-later" %}">Bookmarked</a>
-          {% if user_subscribed %}
+          {% comment %} {% if user_subscribed %}
           <a href="{% url 'manage-subscription-page' %}">Manage Subscription</a>
-          {% else %}
-          <a href="{% url 'subscription-page' %}">Subscribe</a>
-          {% endif %}
+          {% else %} {% endcomment %}
+          <a href="{% url 'subscription-page' %}">Subscription</a>
+          
         </nav>
       </header>
     {%block content%}

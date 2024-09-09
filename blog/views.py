@@ -45,7 +45,7 @@ class StartingPageView(ListView):
         # Determine if the user has subscribed
         # Assuming `subscription_id` is obtained from somewhere; replace with actual ID if needed
         
-        print(stored_subscriber)
+      
       
         # Add subscription status to the context
         context["user_subscribed"] = stored_subscriber
@@ -95,7 +95,7 @@ class PostsView(ListView):
         # Determine if the user has subscribed
         # Assuming `subscription_id` is obtained from somewhere; replace with actual ID if needed
         
-        print(stored_subscriber)
+       
       
         # Add subscription status to the context
         context["user_subscribed"] = stored_subscriber
@@ -237,8 +237,6 @@ class SubscriptionPageView(FormView):
        
        
 
-        print(subscription)  # Save the form
-        print(subscriber_info)
         self.send_subscription_email(subscriber_info)  # Send the email
         return HttpResponseRedirect(reverse("starting-page"))
 
@@ -259,6 +257,8 @@ class SubscriptionPageView(FormView):
         message = f'Dear {subscriber_info["first_name"]},\n\nThank you for subscribing to our newsletter!'
         from_email = settings.DEFAULT_FROM_EMAIL 
         recipient_list = [subscriber_info["email"]]  # Send to the subscriber's email
+        print(from_email)
+        
 
         send_mail(subject, message, from_email, recipient_list)
     
@@ -278,12 +278,12 @@ class ManageSubscriptionPage(FormView):
     def post(self, request, *args, **kwargs):
         email = request.POST.get('subscription_email')
         context = self.get_context_data()
-        print(email)
+        
           
         if email:
             try:
                 subscription = Subscription.objects.get(email=email)
-                print(subscription, "hello")
+                
                 subscription.delete()
                 stored_subscriber = self.request.session.get("stored_subscriber", False)
                 if stored_subscriber:
