@@ -9,20 +9,50 @@
     {%block css_file%} {% endblock %}
 </head>
 <body>
+    <!-- Main navigation for larger screens -->
     <header id="main-navigation">
+      <h1><a href="{% url "starting-page"%}">Tech Time</a></h1>
+      <nav>
+        <a href="{% url "posts-page"  %}">All Posts</a>
+        <a href="{% url "read-later" %}">Bookmarked</a>
+        <a href="{% url 'subscription-page' %}">Subscription</a>
+      </nav>
+    </header>
+
+    <!-- Small screen navigation -->
+    <header id="small-screen">
+      <div class="header">
         <h1><a href="{% url "starting-page"%}">Tech Time</a></h1>
-        <nav>
+
+        <!-- Burger icon for smaller screens -->
+        <div class="burger-icon">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </div>
+      
+      <!-- Navigation links (initially hidden) -->
+      <div class="nav">
+        <nav class="nav-links">
           <a href="{% url "posts-page"  %}">All Posts</a>
           <a href="{% url "read-later" %}">Bookmarked</a>
-          {% comment %} {% if user_subscribed %}
-          <a href="{% url 'manage-subscription-page' %}">Manage Subscription</a>
-          {% else %} {% endcomment %}
           <a href="{% url 'subscription-page' %}">Subscription</a>
-          
         </nav>
-      </header>
-    {%block content%}
-    {% endblock %} 
-    
+      </div>
+    </header>
+
+    {%block content%} {% endblock %}
+
+    <script>
+      const burger = document.querySelector('.burger-icon');
+      const nav = document.querySelector('.nav');
+
+      // Event listener for burger menu toggle
+      burger.addEventListener('click', () => {
+        nav.classList.toggle('nav-active');
+        burger.classList.toggle('toggle');
+      });
+    </script>
 </body>
 </html>

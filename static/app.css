@@ -47,3 +47,90 @@ h3 {
 #main-navigation h1 a:active {
   color: white;
 }
+
+#small-screen {
+  display: none;
+}
+
+@media only screen and (max-width: 955px) {
+  #main-navigation {
+    display: none;
+  }
+
+  #small-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+  }
+
+  .burger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+  }
+
+  .burger-icon div {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+  }
+
+  /* Hide the nav links by default */
+  .nav {
+    display: none;
+    width: 100%;
+
+    padding: 1rem;
+  }
+
+  /* When the burger is clicked, show the nav links */
+  .nav.nav-active {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    z-index: 999;
+    top: 100px;
+  }
+
+  .nav-links a {
+    color: white;
+    padding: 1rem;
+    text-decoration: none;
+    display: block;
+  }
+
+  .nav-links a:hover {
+    background-color: #5984ab;
+  }
+
+  /* Burger icon animation */
+  .burger-icon.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .burger-icon.toggle .line2 {
+    opacity: 0;
+  }
+
+  .burger-icon.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+}
