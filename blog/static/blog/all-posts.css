@@ -14,7 +14,6 @@ body {
   margin: 7rem auto;
   width: 90%;
   max-width: 60rem;
-
 }
 
 #all-posts h2 {
@@ -22,9 +21,8 @@ body {
   font-size: 3rem;
   color: #2e2e2e;
   margin: 3rem 0;
- 
-  text-decoration: underline
 
+  text-decoration: underline;
 }
 
 ul {
@@ -45,10 +43,78 @@ ul {
 }
 
 .post a {
-  
   transform-origin: center;
   border-bottom: 1px grey solid;
   border-radius: 10px;
-  
+}
 
+@media only screen and (max-width: 768px) {
+  #main-navigation {
+    padding: 0 5%;
+    height: 4rem;
+  }
+
+  #all-posts {
+    margin: 5rem auto;
+    width: 95%;
+    max-width: 40rem;
+  }
+
+  #all-posts h2 {
+    font-size: 2rem;
+    margin: 4rem 0;
+    margin-top: 8rem;
+  }
+
+  ul {
+    padding: 20px;
+    display: block; /* Switch to a block layout */
+  }
+
+  .post img {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .post a {
+    border-bottom: 1px grey solid;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #main-navigation {
+    padding: 0 3%;
+    height: 3.5rem;
+  }
+
+  #all-posts {
+    margin: 3rem auto;
+    width: 90%;
+    max-width: 30rem;
+  }
+
+  #all-posts h2 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0;
+    margin-top: 8rem;
+  }
+
+  ul {
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .post img {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .post a {
+    border-bottom: 1px grey solid;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
 }

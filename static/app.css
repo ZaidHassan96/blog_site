@@ -72,10 +72,19 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 95%;
+    width: 100%;
     position: fixed;
     z-index: 999;
     top: 0;
+    background: linear-gradient(to right top, #2732c9ca, #092bd5d8);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+  }
+
+  .header a {
+    color: white;
+    text-decoration: none;
   }
 
   .burger-icon {
@@ -107,11 +116,13 @@ h3 {
     align-items: flex-start;
     position: fixed;
     z-index: 999;
-    top: 100px;
+    top: 90px; /* Position it below the header */
+    background-color: rgba(255, 255, 255, 0.897);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
-
   .nav-links a {
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 1rem;
     text-decoration: none;
     display: block;
