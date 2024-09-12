@@ -50,9 +50,9 @@ input {
 
 #comment-form button {
   font: inherit;
-  background-color: #390281;
+  background-color: #1a49a7;
   color: white;
-  border: 1px solid #390281;
+  border: 1px solid #2645a4;
   padding: 0.5rem 1.5rem;
   border-radius: 6px;
   cursor: pointer;
@@ -60,8 +60,8 @@ input {
 
 #comment-form button:hover,
 #comment-form button:active {
-  background-color: #4f0ba7;
-  border-color: #4f0ba7;
+  background-color: #0e0ba7;
+  border-color: #0b0ea7;
 }
 
 a {
