@@ -53,7 +53,12 @@
 
 
 <main>
-{{post.content| linebreaks}}
+    <div class="post-content">
+        <div class="post-content">
+            {{ post.content | safe }}
+        </div>
+        
+    </div>
 {% if comments %}
 <section id="comments">
     <ul>
@@ -65,9 +70,11 @@
         </li>
         {% endfor %}
     </ul>
+{% else %}
+    <h3 id="no-comments">No comments.</h3>
 </section>
 {% endif %}
-<h3 id="no-comments">No comments.</h3>
+
 {% include "blog/includes/post-comment.html"%}
 </main>
 {% endblock %}

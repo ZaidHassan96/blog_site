@@ -10,6 +10,7 @@
 </head>
 <body>
     <!-- Main navigation for larger screens -->
+     <div class="container">
     <header id="main-navigation">
       <h1><a href="{% url "starting-page"%}">Tech Time</a></h1>
       <nav>
@@ -18,6 +19,7 @@
         <a href="{% url 'subscription-page' %}">Subscription</a>
       </nav>
     </header>
+ 
 
     <!-- Small screen navigation -->
     <header id="small-screen">
@@ -43,6 +45,13 @@
     </header>
 
     {%block content%} {% endblock %}
+  </div>
+
+  <footer class="copy">
+    <p>Copyright &copy; 2024 Zaid</p>
+  </footer>
+
+  
 
     <script>
       const burger = document.querySelector('.burger-icon');
@@ -55,4 +64,5 @@
       });
     </script>
 </body>
+
 </html>
