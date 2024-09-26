@@ -3,3 +3,43 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Python files
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Environment variables
+.env
+.env.production
+
+# Django specific files
+*.sqlite3
+media/
+staticfiles/
+*.log
+*.pot
+*.mo
+
+# Virtual environment
+venv/
+myenv/
+.venv/
+
+# Editor specific files
+.idea/
+*.sublime-workspace
+*.sublime-project
+.vscode/
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Miscellaneous
+*.bak
+*.tmp
