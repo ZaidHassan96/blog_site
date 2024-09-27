@@ -2,6 +2,11 @@
 
 Welcome to My Django Blog! This is a personal blog application built using Django, showcasing articles, tutorials, and insights on various tech topics.
 
+
+## Deployed version
+Tech-blog-env.eba-2katpvyz.eu-west-2.elasticbeanstalk.com 
+
+
 ## Table of Contents
 
 - [Features](#features)
