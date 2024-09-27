@@ -4,7 +4,7 @@ Welcome to My Django Blog! This is a personal blog application built using Djang
 
 
 ## Deployed version
-Tech-blog-env.eba-2katpvyz.eu-west-2.elasticbeanstalk.com 
+http://tech-blog-env.eba-2katpvyz.eu-west-2.elasticbeanstalk.com/ 
 
 
 ## Table of Contents
