@@ -55,25 +55,30 @@ To get a local copy up and running, follow these simple steps:
 
    ```
 
-4. Activate the virtual environment:
-    On Windows:
+4. Activate the virtual environment on Windows:
 
-    ```bash
-    myenv\Scripts\activate
+   ```bash
+   myenv\Scripts\activate
 
-    On mac/OS/Linux:
-    source myenv/bin/activate
 
    ```
 
-5. Install the required packages:
+5. Activate the virtual environment on macOS/Linux:
+
+   ```bash
+
+   source myenv/bin/activate
+
+   ```
+
+6. Install the required packages:
 
    ```bash
    pip install -r requirements.txt
 
    ```
 
-6. Run the development server:
+7. Run the development server:
 
    ```bash
    python manage.py runserver
