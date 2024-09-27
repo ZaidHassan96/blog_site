@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("IS_DEVELOPMENT", "True") == "True" 
-print(DEBUG) # Converts the string to a boolean
+
 
 
   # Reading .env file

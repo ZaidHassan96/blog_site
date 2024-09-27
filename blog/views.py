@@ -257,7 +257,7 @@ class SubscriptionPageView(FormView):
         message = f'Dear {subscriber_info["first_name"]},\n\nThank you for subscribing to our newsletter!'
         from_email = settings.DEFAULT_FROM_EMAIL 
         recipient_list = [subscriber_info["email"]]  # Send to the subscriber's email
-        print(from_email)
+   
         
 
         send_mail(subject, message, from_email, recipient_list)
