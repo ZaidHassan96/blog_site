@@ -56,13 +56,13 @@ To get a local copy up and running, follow these simple steps:
    ```
 
 4. Activate the virtual environment:
-   On Windows:
+    On Windows:
 
-   ```bash
+    ```bash
     myenv\Scripts\activate
 
-   On mac/OS/Linux:
-   source myenv/bin/activate
+    On mac/OS/Linux:
+    source myenv/bin/activate
 
    ```
 
