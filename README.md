@@ -59,7 +59,7 @@ To get a local copy up and running, follow these simple steps:
    On Windows:
 
    ```bash
-   myenv\Scripts\activate
+    myenv\Scripts\activate
 
    On mac/OS/Linux:
    source myenv/bin/activate
@@ -74,6 +74,7 @@ To get a local copy up and running, follow these simple steps:
    ```
 
 6. Run the development server:
+
    ```bash
    python manage.py runserver
 
