@@ -4,6 +4,27 @@ from django.utils.text import slugify
 from django.core.exceptions import ValidationError  # Import ValidationError
 
 
+
+class TagModelTestCase(TestCase):
+     def setUp(self):
+          self.tag = Tag.objects.create(caption="TestTag")
+    
+     def test_tag_creation(self):
+          self.assertEqual(self.tag.caption, "TestTag")
+     
+     def test_tag_str(self):
+          self.assertEqual(str(self.tag), "TestTag")
+
+     def test_max_length_tag(self):
+          long_tag = Tag(caption="a" * 30)
+          with self.assertRaises(ValidationError):
+               long_tag.full_clean()
+     
+     
+          
+          
+
+
 class PostModelTestCase(TestCase):
     
     def setUp(self):
@@ -41,7 +62,56 @@ class PostModelTestCase(TestCase):
         
             self.assertIn('content', cm.exception.message_dict)
         
+    
+    def test_title_max_length(self):
+        """Test that the title does not exceed the max_length of 100 characters."""
+        long_title = "x" * 101  # Create a title that exceeds 100 characters
+        post_with_long_title = Post(
+            title=long_title,
+            excerpt="Test Excerpt",
+            content="This is a test content with more than ten characters.",
+            author=self.author,
+            slug=slugify("Test Long Title")
+        )
 
+        with self.assertRaises(ValidationError):
+             post_with_long_title.full_clean()
+
+
+class CommentModelTestCase(TestCase):
+    def setUp(self):
+          
+          author = Author.objects.create(
+               first_name="John",
+               last_name="Jones",
+               email_address="johnj@hotmail.com"
+          )
+
+          post = Post.objects.create(
+            title="The adventures of John",
+            excerpt="John and his adventures",
+            content="John has been on many different adventures all across the globe..",
+            author=author
+          )
+          self.comment = Comment.objects.create(
+               user_name="Zaid",
+               user_email="zaid@hotmail.com",
+               text="Amazing post!",
+               post=post
+
+
+          )
+
+    def test_comment_creation(self):
+         self.assertTrue(isinstance(self.comment, Comment ))
+         self.assertEqual(self.comment.user_name, "Zaid")
+         self.assertEqual(self.comment.user_email, "zaid@hotmail.com")
+         self.assertEqual(self.comment.text, "Amazing post!")
+         
+         
+     
+
+     
 
 
 
