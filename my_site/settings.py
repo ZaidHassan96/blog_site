@@ -111,7 +111,7 @@ WSGI_APPLICATION = 'my_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # This is the default SQLite database file
+        'NAME': '/mnt/data/db.sqlite3',  # Store SQLite in Render's persistent storage
     }
 }
 
