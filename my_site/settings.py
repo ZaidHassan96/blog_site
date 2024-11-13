@@ -40,10 +40,12 @@ DEBUG = os.getenv("IS_DEVELOPMENT", "True") == "True"
   # Reading .env file
 
 # Set ALLOWED_HOSTS
-ALLOWED_HOSTS = [
-    getenv("APP_HOST"),
-    '127.0.0.1'
-]
+# ALLOWED_HOSTS = [
+#     getenv("APP_HOST"),
+#     '127.0.0.1'
+# ]
+ALLOWED_HOSTS = ['*']
+
 # ALLOWED_HOSTS += ['127.0.0.1', 'localhost']
 
 # Application definition
@@ -96,17 +98,22 @@ WSGI_APPLICATION = 'my_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER' : 'djangoblog' ,
+#         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+#         'HOST' : os.getenv('DATABASE_HOST'),
+#         'PORT' : '5432'
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER' : 'djangoblog' ,
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST' : os.getenv('DATABASE_HOST'),
-        'PORT' : '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # This is the default SQLite database file
     }
 }
-
 
 
 # Password validation
@@ -201,26 +208,38 @@ EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')
 DEFAULT_FROM_EMAIL = 'techtimereply@outlook.com' 
 
 
+# Static files settings
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Folder for additional static files (optional)
+]
 
-AWS_STORAGE_BUCKET_NAME = "django-tech-blog"
-AWS_S3_REGION_NAME = "eu-west-2"
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# Media files settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "uploads"  # Folder where uploaded media files will be stored
 
-STORAGES = {
-    "default": {
-        "BACKEND": "custom_storages.MediaFileStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "custom_storages.StaticFileStorage",
-    }
-}
 
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 
-STATICFILES_FOLDER = "static"
+# AWS_STORAGE_BUCKET_NAME = "django-tech-blog"
+# AWS_S3_REGION_NAME = "eu-west-2"
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 
-MEDIAFILES_FOLDER = "media"
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "custom_storages.MediaFileStorage",
+#     },
+#     "staticfiles": {
+#         "BACKEND": "custom_storages.StaticFileStorage",
+#     }
+# }
+
+# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+# STATICFILES_FOLDER = "static"
+
+# MEDIAFILES_FOLDER = "media"
 
 
 

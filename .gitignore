@@ -25,6 +25,8 @@ staticfiles/
 *.log
 *.pot
 *.mo
+db.sqlite3
+
 
 # Virtual environment
 venv/
