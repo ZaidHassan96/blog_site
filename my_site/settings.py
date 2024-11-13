@@ -192,4 +192,4 @@ MEDIA_ROOT = BASE_DIR / "uploads"  # Folder where uploaded media files will be s
 
 
 
-print("Loaded ENV variables:", os.environ)
+
