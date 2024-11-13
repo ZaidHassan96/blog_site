@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import os
 from os import getenv
 import environ
+import dj_database_url
 
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path,override=True)
@@ -98,22 +99,13 @@ WSGI_APPLICATION = 'my_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER' : 'djangoblog' ,
-#         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-#         'HOST' : os.getenv('DATABASE_HOST'),
-#         'PORT' : '5432'
-#     }
-# }
+# Read database URL from the .env file
+DATABASE_URL = os.getenv('DATABASE_URL')
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Default SQLite location in the project folder
-    }
+    'default': dj_database_url.config(default=DATABASE_URL)
 }
+
 
 
 
@@ -165,31 +157,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/files/"
 
-# if DEBUG:  # Local development
-#     STATIC_URL = '/static/'
-#     STATICFILES_DIRS = [BASE_DIR / "static"]
-#     STATIC_ROOT = BASE_DIR / "staticfiles"
-#     MEDIA_ROOT = BASE_DIR / "uploads"
-#     MEDIA_URL = "/files/"
-# else:  # Production
-#     AWS_STORAGE_BUCKET_NAME = "django-tech-blog"
-#     AWS_S3_REGION_NAME = "eu-west-2"
-#     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-#     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-
-#     STORAGES = {
-#         "default": {
-#         "BACKEND": "custom_storages.MediaFileStorage",
-#         },
-#         "staticfiles": {
-#         "BACKEND": "custom_storages.StaticFileStorage",
-#         }
-#     }
-#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-
-#     STATICFILES_FOLDER = "static"
-
-#     MEDIAFILES_FOLDER = "media"
 
 
 
@@ -222,25 +189,7 @@ MEDIA_ROOT = BASE_DIR / "uploads"  # Folder where uploaded media files will be s
 
 
 
-# AWS_STORAGE_BUCKET_NAME = "django-tech-blog"
-# AWS_S3_REGION_NAME = "eu-west-2"
-# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "custom_storages.MediaFileStorage",
-#     },
-#     "staticfiles": {
-#         "BACKEND": "custom_storages.StaticFileStorage",
-#     }
-# }
-
-# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-
-# STATICFILES_FOLDER = "static"
-
-# MEDIAFILES_FOLDER = "media"
 
 
 
+print("Loaded ENV variables:", os.environ)
