@@ -34,7 +34,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("IS_DEVELOPMENT", "True") == "True" 
+# DEBUG = os.getenv("IS_DEVELOPMENT", "True") == "True" 
+DEBUG = False
+
 
 
 
@@ -157,12 +159,25 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# MEDIA_ROOT = BASE_DIR / "uploads"
-# MEDIA_URL = "/files/"
 
-# MEDIA_ROOT = '/var/data/uploads'  
-MEDIA_ROOT = os.getenv("RENDER_MEDIA_ROOT", BASE_DIR / "uploads")
+# Static files settings
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Folder for additional static files (optional)
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/files/"
+
+MEDIA_ROOT = '/var/data/uploads'  
+# if os.getenv('IS_DEVELOPMENT', 'True') == 'True':
+#     MEDIA_ROOT = BASE_DIR / 'uploads'
+# else:
+#     MEDIA_ROOT = '/var/data/uploads'
+
+# MEDIA_URL = '/files/'
 
 
 
@@ -181,14 +196,6 @@ EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')
 # Default from email
 DEFAULT_FROM_EMAIL = 'techtimereply@outlook.com' 
 
-
-# Static files settings
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Folder for additional static files (optional)
-]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
