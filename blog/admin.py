@@ -1,12 +1,13 @@
 from django.contrib import admin
 
-from .models import Post, Author, Tag, Comment, Subscription
+from .models import Post, Author, Tag, Comment, Subscription, StaticImage
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_filter = ("author", "tags", "date")
-    list_display = ("title", "date", "author")
+    list_filter = ("author", "tags", "date", "image")
+    list_display = ("title", "date", "author", "image")
     prepopulated_fields = {"slug": ("title",)}
+ 
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("user_name", "post")
@@ -17,6 +18,8 @@ admin.site.register(Author)
 admin.site.register(Tag)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Subscription)
+admin.site.register(StaticImage)
+
 
 
 

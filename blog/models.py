@@ -23,21 +23,35 @@ class Author(models.Model):
     
 
 
+# models.py
 
-       
+
+
+
+
+class StaticImage(models.Model):
+    name = models.CharField(max_length=255)  # A name for the image
+    filename = models.CharField(max_length=255)  # Store the relative path to the image in the static folder
+
+    def __str__(self):
+        return self.name
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
     excerpt = models.CharField(max_length=200)
-    image = models.ImageField(upload_to="posts", null=True)
+    image = models.ForeignKey(StaticImage, null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateField(auto_now=True)
     slug = models.SlugField(unique=True, db_index=True)
     content = models.TextField(validators=[MinLengthValidator(10)])
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(Tag)
+    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField('Tag')
 
     def __str__(self):
         return self.title
+       
+
+
 
 
 class Comment(models.Model):
