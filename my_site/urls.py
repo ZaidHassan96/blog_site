@@ -37,6 +37,6 @@ urlpatterns = [
 ]
 
 # Add routes to serve media and static files in development
-# if settings.DEBUG:  # Only serve static and media files this way in DEBUG mode
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG:  # Only serve static and media files this way in DEBUG mode
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

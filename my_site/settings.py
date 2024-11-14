@@ -157,9 +157,12 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = BASE_DIR / "uploads"
-MEDIA_URL = "/files/"
+# MEDIA_ROOT = BASE_DIR / "uploads"
+# MEDIA_URL = "/files/"
 
+# MEDIA_ROOT = '/var/data/uploads'  
+MEDIA_ROOT = os.getenv("RENDER_MEDIA_ROOT", BASE_DIR / "uploads")
+MEDIA_URL = "/files/"
 
 
 
@@ -187,9 +190,7 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files settings
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "uploads"  # Folder where uploaded media files will be stored
+
 
 
 
