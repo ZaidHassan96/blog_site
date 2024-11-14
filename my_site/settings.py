@@ -163,10 +163,10 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/files/"
 
-MEDIA_ROOT = '/uploads'  
+# MEDIA_ROOT = '/uploads'  
 # if os.getenv('IS_DEVELOPMENT', 'True') == 'True':
 #     MEDIA_ROOT = BASE_DIR / 'uploads'
 # else:
