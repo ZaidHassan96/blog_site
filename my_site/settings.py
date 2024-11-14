@@ -47,7 +47,7 @@ DEBUG = os.getenv("IS_DEVELOPMENT", "True") == "True"
 #     getenv("APP_HOST"),
 #     '127.0.0.1'
 # ]
-ALLOWED_HOSTS = ['blog-site-1-7o12.onrender.com', 'localhost', '127.0.0.1' ]
+ALLOWED_HOSTS = ['blog-site-1-7o12.onrender.com', 'blog-site-chd2.onrender.com', 'localhost', '127.0.0.1' ]
 
 
 # ALLOWED_HOSTS += ['127.0.0.1', 'localhost']
@@ -161,7 +161,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Folder for additional static files (optional)
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/files/"
