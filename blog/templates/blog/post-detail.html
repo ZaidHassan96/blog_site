@@ -42,7 +42,7 @@
     </form>
 </div>
 <article>
-    <img src="{{post.image.url}}" alt="{{post.title}}">
+    <img src="{% static  post.image.filename %}" alt="{{post.title}}">
     <address>By <a href="mailto:{{post.author.emai_address}}">{{post.author}}</a></address>
     <div>
         Last updated on <time>{{post.date|date:" d M Y"}}</time>
