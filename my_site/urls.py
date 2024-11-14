@@ -23,8 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("blog.urls"))
 ]
-# ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) \
-#   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 
 # This section serves media and static files when in DEBUG mode
 if settings.DEBUG:
