@@ -4,7 +4,7 @@ Welcome to My Django Blog! This is a personal blog application built using Djang
 
 
 ## Deployed version
-https://blog-site-1-7o12.onrender.com
+https://blog-site-chd2.onrender.com
 
 
 ## Table of Contents
